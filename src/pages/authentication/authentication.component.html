@@ -1,0 +1,34 @@
+<div>
+  <h1>{{ "authentication" | translate }}</h1>
+  <p>{{ "login-instruction--label" | translate }}</p>
+  <form>
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ "email--label" | translate }}</mat-label>
+      <input
+        matInput
+        [placeholder]="'email--placeholder' | translate"
+        [(ngModel)]="authentication.email"
+        name="email"
+        type="email"
+      />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ "password--label" | translate }}</mat-label>
+      <input
+        matInput
+        [placeholder]="'password--placeholder' | translate"
+        [(ngModel)]="authentication.password"
+        name="password"
+        type="password"
+      />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="authentication.login()"
+      [disabled]="!authentication.email || !authentication.password"
+    >
+      {{ "login--label" | translate }}
+    </button>
+  </form>
+</div>

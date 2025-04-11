@@ -1,0 +1,18 @@
+{
+  "authentication": "Authentification",
+  "login-instruction--label": "Veuillez vous connecter pour accéder à votre compte.",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "register": "S'inscrire",
+  "email": "E-mail",
+  "password": "Mot de passe",
+  "confirmPassword": "Confirmer le mot de passe",
+  "forgotPassword": "Mot de passe oublié ?",
+  "resetPassword": "Réinitialiser le mot de passe",
+  "sendResetLink": "Envoyer le lien de réinitialisation",
+  "rememberMe": "Se souvenir de moi",
+  "welcomeBack": "Bon retour !",
+  "welcome": "Bienvenue dans notre application !",
+  "profile": "Profil",
+  "settings": "Paramètres"
+}

@@ -1,0 +1,22 @@
+{
+  "authentication": "Authentication",
+  "email--label": "Email",
+  "email--placeholder": "Enter your email",
+  "password--placeholder": "Enter your password",
+  "password--label": "Password",
+  "login-instruction--label": "Please log in to access your account.",
+  "login--label": "Login",
+  "logout": "Logout",
+  "register": "Register",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "forgotPassword": "Forgot Password?",
+  "resetPassword": "Reset Password",
+  "sendResetLink": "Send Reset Link",
+  "rememberMe": "Remember Me",
+  "welcomeBack": "Welcome Back!",
+  "welcome": "Welcome to our application!",
+  "profile": "Profile",
+  "settings": "Settings"
+}

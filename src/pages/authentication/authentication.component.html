@@ -1,34 +1,45 @@
-<div>
+<div class="authentication-container">
   <h1>{{ "authentication" | translate }}</h1>
   <p>{{ "login-instruction--label" | translate }}</p>
-  <form>
-    <mat-form-field class="example-full-width">
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+    <mat-form-field class="input-container">
       <mat-label>{{ "email--label" | translate }}</mat-label>
       <input
         matInput
         [placeholder]="'email--placeholder' | translate"
-        [(ngModel)]="authentication.email"
-        name="email"
+        formControlName="email"
         type="email"
       />
+      <mat-error *ngIf="email?.hasError('required')">
+        {{ "email-required--label" | translate }}
+      </mat-error>
+      <mat-error
+        *ngIf="email?.hasError('email') && !email?.hasError('required')"
+      >
+        {{ "email--error--label" | translate }}
+      </mat-error>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+
+    <mat-form-field class="input-container">
       <mat-label>{{ "password--label" | translate }}</mat-label>
       <input
         matInput
         [placeholder]="'password--placeholder' | translate"
-        [(ngModel)]="authentication.password"
-        name="password"
+        formControlName="password"
         type="password"
       />
+      <mat-error *ngIf="password?.hasError('required')">
+        {{ "password-required--label" | translate }}
+      </mat-error>
     </mat-form-field>
+
     <button
       mat-raised-button
       color="primary"
-      (click)="authentication.login()"
-      [disabled]="!authentication.email || !authentication.password"
+      type="submit"
+      [disabled]="loginForm.invalid"
     >
-      {{ "login--label" | translate }}
+      {{ "login--button" | translate }}
     </button>
   </form>
 </div>

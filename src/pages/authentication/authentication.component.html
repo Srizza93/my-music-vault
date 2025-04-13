@@ -1,34 +1,62 @@
-<div>
-  <h1>{{ "authentication" | translate }}</h1>
-  <p>{{ "login-instruction--label" | translate }}</p>
-  <form>
-    <mat-form-field class="example-full-width">
-      <mat-label>{{ "email--label" | translate }}</mat-label>
+<div class="authentication-container" role="main">
+  <h1 id="auth-heading">{{ "authentication" | translate }}</h1>
+  <p id="login-instructions">{{ "login-instruction--label" | translate }}</p>
+
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    class="login-form"
+    aria-labelledby="auth-heading"
+    aria-describedby="login-instructions"
+  >
+    <mat-form-field class="input-container">
+      <mat-label id="email-label">{{ "email--label" | translate }}</mat-label>
       <input
         matInput
         [placeholder]="'email--placeholder' | translate"
-        [(ngModel)]="authentication.email"
-        name="email"
+        formControlName="email"
         type="email"
+        aria-required="true"
+        aria-describedby="email-error"
+        autocomplete="email"
       />
+      <mat-error *ngIf="email?.hasError('required')" id="email-error">
+        {{ "email-required--label" | translate }}
+      </mat-error>
+      <mat-error
+        *ngIf="email?.hasError('email') && !email?.hasError('required')"
+        id="email-format-error"
+      >
+        {{ "email--error--label" | translate }}
+      </mat-error>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label>{{ "password--label" | translate }}</mat-label>
+
+    <mat-form-field class="input-container">
+      <mat-label id="password-label">{{
+        "password--label" | translate
+      }}</mat-label>
       <input
         matInput
         [placeholder]="'password--placeholder' | translate"
-        [(ngModel)]="authentication.password"
-        name="password"
+        formControlName="password"
         type="password"
+        aria-required="true"
+        aria-describedby="password-error"
+        autocomplete="current-password"
       />
+      <mat-error *ngIf="password?.hasError('required')" id="password-error">
+        {{ "password-required--label" | translate }}
+      </mat-error>
     </mat-form-field>
+
     <button
       mat-raised-button
       color="primary"
-      (click)="authentication.login()"
-      [disabled]="!authentication.email || !authentication.password"
+      type="submit"
+      [disabled]="loginForm.invalid"
+      [attr.aria-disabled]="loginForm.invalid"
     >
-      {{ "login--label" | translate }}
+      {{ "login--button" | translate }}
     </button>
   </form>
 </div>

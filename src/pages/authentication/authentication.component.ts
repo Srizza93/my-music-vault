@@ -6,10 +6,15 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslatePipe, TranslateModule } from '@ngx-translate/core';
+import {
+  TranslatePipe,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { LoginApi } from '../../api/loginApi';
 import { JWT_COOKIE_NAME, CookieHelper } from '../../helpers/cookieHelper';
@@ -37,7 +42,9 @@ export class AuthenticationComponent {
     private fb: FormBuilder,
     private router: Router,
     private loginApi: LoginApi,
-    private cookieHelper: CookieHelper
+    private cookieHelper: CookieHelper,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -61,10 +68,23 @@ export class AuthenticationComponent {
       next: (response: Login) => {
         this.cookieHelper.setCookie(JWT_COOKIE_NAME, response.access_token, 1);
         this.router.navigate(['/user']);
+        this.snackBar.open(
+          this.translate.instant('login-success--label'),
+          'Close',
+          {
+            duration: 2000,
+          }
+        );
       },
-      error: (error) => {
-        console.error('Error:', error);
-        alert('Invalid username or password.');
+      error: () => {
+        this.snackBar.open(
+          this.translate.instant('login-error--label'),
+          'Close',
+          {
+            duration: 2000,
+          }
+        );
+        this.loginForm.reset();
       },
     });
   }

@@ -9,6 +9,8 @@
   "password-required--label": "Password is required",
   "login-instruction--label": "Please log in to access your account.",
   "login--button": "Login",
+  "login-success--label": "Login successful! Redirecting...",
+  "login-error--label": "Login failed! Please check your credentials.",
   "logout": "Logout",
   "register": "Register",
   "email": "Email",

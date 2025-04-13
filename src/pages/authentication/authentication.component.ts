@@ -5,7 +5,6 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   TranslatePipe,
   TranslateModule,
@@ -40,7 +39,6 @@ export class AuthenticationComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private loginApi: LoginApi,
     private authenticationService: AuthenticationService,
     private translate: TranslateService,
@@ -67,7 +65,6 @@ export class AuthenticationComponent {
     this.loginApi.login(email, password).subscribe({
       next: (response: Login) => {
         this.authenticationService.login(response.access_token);
-        this.router.navigate(['/user']);
         this.toaster.showToast(
           this.translate.instant('login-success--label'),
           ToastType.SUCCESS

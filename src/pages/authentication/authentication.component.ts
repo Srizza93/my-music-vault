@@ -14,11 +14,11 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { LoginApi } from '../../api/loginApi';
 import { JWT_COOKIE_NAME, CookieHelper } from '../../helpers/cookieHelper';
 import type { Login } from '../../types/login';
+import { ToasterService, ToastType } from '../../services/toasterService';
 
 @Component({
   selector: 'app-authentication',
@@ -43,8 +43,8 @@ export class AuthenticationComponent {
     private router: Router,
     private loginApi: LoginApi,
     private cookieHelper: CookieHelper,
-    private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private toaster: ToasterService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -68,21 +68,15 @@ export class AuthenticationComponent {
       next: (response: Login) => {
         this.cookieHelper.setCookie(JWT_COOKIE_NAME, response.access_token, 1);
         this.router.navigate(['/user']);
-        this.snackBar.open(
+        this.toaster.showToast(
           this.translate.instant('login-success--label'),
-          'Close',
-          {
-            duration: 2000,
-          }
+          ToastType.SUCCESS
         );
       },
       error: () => {
-        this.snackBar.open(
+        this.toaster.showToast(
           this.translate.instant('login-error--label'),
-          'Close',
-          {
-            duration: 2000,
-          }
+          ToastType.ERROR
         );
         this.loginForm.reset();
       },

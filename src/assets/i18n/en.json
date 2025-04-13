@@ -1,5 +1,6 @@
 {
   "authentication": "Authentication",
+  "close--button": "Close",
   "email--label": "Email",
   "email--placeholder": "Enter your email",
   "email--error--label": "Invalid email address",

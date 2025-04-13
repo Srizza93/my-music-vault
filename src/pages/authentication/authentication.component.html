@@ -1,34 +1,50 @@
-<div class="authentication-container">
-  <h1>{{ "authentication" | translate }}</h1>
-  <p>{{ "login-instruction--label" | translate }}</p>
-  <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+<div class="authentication-container" role="main">
+  <h1 id="auth-heading">{{ "authentication" | translate }}</h1>
+  <p id="login-instructions">{{ "login-instruction--label" | translate }}</p>
+
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    class="login-form"
+    aria-labelledby="auth-heading"
+    aria-describedby="login-instructions"
+  >
     <mat-form-field class="input-container">
-      <mat-label>{{ "email--label" | translate }}</mat-label>
+      <mat-label id="email-label">{{ "email--label" | translate }}</mat-label>
       <input
         matInput
         [placeholder]="'email--placeholder' | translate"
         formControlName="email"
         type="email"
+        aria-required="true"
+        aria-describedby="email-error"
+        autocomplete="email"
       />
-      <mat-error *ngIf="email?.hasError('required')">
+      <mat-error *ngIf="email?.hasError('required')" id="email-error">
         {{ "email-required--label" | translate }}
       </mat-error>
       <mat-error
         *ngIf="email?.hasError('email') && !email?.hasError('required')"
+        id="email-format-error"
       >
         {{ "email--error--label" | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="input-container">
-      <mat-label>{{ "password--label" | translate }}</mat-label>
+      <mat-label id="password-label">{{
+        "password--label" | translate
+      }}</mat-label>
       <input
         matInput
         [placeholder]="'password--placeholder' | translate"
         formControlName="password"
         type="password"
+        aria-required="true"
+        aria-describedby="password-error"
+        autocomplete="current-password"
       />
-      <mat-error *ngIf="password?.hasError('required')">
+      <mat-error *ngIf="password?.hasError('required')" id="password-error">
         {{ "password-required--label" | translate }}
       </mat-error>
     </mat-form-field>
@@ -38,6 +54,7 @@
       color="primary"
       type="submit"
       [disabled]="loginForm.invalid"
+      [attr.aria-disabled]="loginForm.invalid"
     >
       {{ "login--button" | translate }}
     </button>

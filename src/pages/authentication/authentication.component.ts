@@ -15,10 +15,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { LoginApi } from '../../api/loginApi';
-import { JWT_COOKIE_NAME, CookieHelper } from '../../helpers/cookieHelper';
-import type { Login } from '../../types/login';
-import { ToasterService, ToastType } from '../../services/toasterService';
+import { LoginApi } from '@/api/login.api';
+import type { Login } from '@/types/login.interface';
+import { AuthenticationService } from '@/services/authentication.service';
+import { ToasterService, ToastType } from '@/services/toaster.service';
 
 @Component({
   selector: 'app-authentication',
@@ -42,7 +42,7 @@ export class AuthenticationComponent {
     private fb: FormBuilder,
     private router: Router,
     private loginApi: LoginApi,
-    private cookieHelper: CookieHelper,
+    private authenticationService: AuthenticationService,
     private translate: TranslateService,
     private toaster: ToasterService
   ) {
@@ -66,7 +66,7 @@ export class AuthenticationComponent {
     const { email, password } = this.loginForm.value;
     this.loginApi.login(email, password).subscribe({
       next: (response: Login) => {
-        this.cookieHelper.setCookie(JWT_COOKIE_NAME, response.access_token, 1);
+        this.authenticationService.login(response.access_token);
         this.router.navigate(['/user']);
         this.toaster.showToast(
           this.translate.instant('login-success--label'),

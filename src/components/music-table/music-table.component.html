@@ -1,1 +1,34 @@
-table
+<mat-form-field>
+  <mat-icon matPrefix>search</mat-icon>
+  <input
+    matInput
+    [placeholder]="'search--placeholder' | translate"
+    formControlName="search"
+    type="text"
+    aria-required="true"
+    autocomplete="search"
+    (keyup)="applyFilter($event)"
+    aria-label="Search Music"
+  />
+</mat-form-field>
+<table mat-table [dataSource]="filteredMusicList">
+  <ng-container
+    *ngFor="let column of displayedColumns; index as i"
+    [matColumnDef]="column"
+  >
+    <th mat-header-cell *matHeaderCellDef>
+      {{ columnsTranslations[i] | titlecase }}
+    </th>
+    <td mat-cell *matCellDef="let song">{{ song[column] }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+>
+</mat-paginator>

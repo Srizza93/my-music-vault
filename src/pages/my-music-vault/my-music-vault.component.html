@@ -3,21 +3,25 @@
     <h1 id="auth-heading" class="auth-heading">
       {{ "my-music-vault--heading" | translate }}
     </h1>
-    <button class="my-music-vault-header__logout" (click)="logout()">
+    <button mat-raised-button (click)="logout()">
       {{ "logout--label" | translate }}
     </button>
   </header>
   <section>
     <button
       mat-raised-button
-      color="primary"
       type="button"
       (click)="openDialog()"
       aria-label="Add Music"
       aria-describedby="add-music-instructions"
+      class="add-music-button"
     >
       {{ "add-music--button" | translate }}
     </button>
   </section>
-  <music-table />
+  <music-table
+    [musicList]="dataForTable.musicList"
+    [displayedColumns]="dataForTable.displayedColumns"
+    [columnsTranslations]="dataForTable.columnsTranslations"
+  />
 </div>

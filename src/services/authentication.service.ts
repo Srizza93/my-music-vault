@@ -15,8 +15,8 @@ export class AuthenticationService {
     return !!this.cookieHelper.getCookie(JWT_COOKIE_NAME);
   }
 
-  login(jwtValue: string): void {
-    this.cookieHelper.setCookie(JWT_COOKIE_NAME, jwtValue, 1);
+  login(jwtValue: string, expiresInSeconds: number): void {
+    this.cookieHelper.setCookie(JWT_COOKIE_NAME, jwtValue, expiresInSeconds);
     this.router.navigate(['/my-music-vault']);
   }
 

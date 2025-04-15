@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatSortModule, MatSort } from '@angular/material/sort';
+import { ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Song } from '@/types/song.interface';
+import { isEqual } from 'lodash';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateModule } from '@ngx-translate/core';
 
@@ -22,24 +25,42 @@ import { TranslatePipe, TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     MatInputModule,
     MatIconModule,
+    MatSortModule,
   ],
-  standalone: true,
 })
 export class MusicTableComponent {
+  dataSource: MatTableDataSource<Song>;
+
   @Input() musicList: Song[] = [];
   @Input() displayedColumns: string[] = [];
   @Input() columnsTranslations: string[] = [];
-  constructor() {}
 
-  filterValue: string = '';
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  get filteredMusicList(): Song[] {
-    return this.musicList.filter((song) =>
-      song.title.toLowerCase().includes(this.filterValue.toLowerCase())
-    );
+  constructor() {
+    this.dataSource = new MatTableDataSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      changes['musicList'] &&
+      !isEqual(
+        changes['musicList'].previousValue,
+        changes['musicList'].currentValue
+      )
+    ) {
+      this.dataSource.data = this.musicList;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
-    this.filterValue = (event.target as HTMLInputElement).value;
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

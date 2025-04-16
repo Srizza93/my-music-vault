@@ -5,11 +5,14 @@ import {
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthenticationService } from '@/services/authentication.service';
 import { MusicApi } from '@/api/music.api';
 import { ToasterService, ToastType } from '@/services/toaster.service';
 import { Song } from '@/types/song.interface';
+import { GenericModalComponent } from '@/components/generic-modal/generic-modal.component';
+import { AddSongFormComponent } from '@/components/add-song-form/add-song-form.component';
 
 @Component({
   selector: 'app-my-music-vault',
@@ -20,6 +23,9 @@ import { Song } from '@/types/song.interface';
     TranslatePipe,
     TranslateModule,
     MatButtonModule,
+    GenericModalComponent,
+    CommonModule,
+    AddSongFormComponent,
   ],
   standalone: true,
 })
@@ -32,6 +38,7 @@ export class MyMusicVaultComponent {
   ) {}
 
   musicList: Song[] = [];
+  isDialogOpen: boolean = false;
 
   get dataForTable() {
     const musicListForDataTable = this.musicList.map((song) => ({
@@ -67,8 +74,31 @@ export class MyMusicVaultComponent {
     });
   }
 
+  addSong(newSong: Song) {
+    this.musicApi.addSong(newSong).subscribe({
+      next: () => {
+        this.initMusicList;
+        this.isDialogOpen = false;
+        this.toaster.showToast(
+          this.translate.instant('song-added--label'),
+          ToastType.SUCCESS
+        );
+      },
+      error: () => {
+        this.toaster.showToast(
+          this.translate.instant('song-add-error--label'),
+          ToastType.ERROR
+        );
+      },
+    });
+  }
+
   openDialog() {
-    // Logic to open a dialog for adding a new music item
+    this.isDialogOpen = true;
+  }
+
+  closeDialog() {
+    this.isDialogOpen = false;
   }
 
   logout() {

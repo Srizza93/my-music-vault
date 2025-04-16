@@ -24,4 +24,11 @@
     [displayedColumns]="dataForTable.displayedColumns"
     [columnsTranslations]="dataForTable.columnsTranslations"
   />
+  <generic-modal
+    *ngIf="isDialogOpen"
+    [modalTitle]="'add-music--modal--title' | translate"
+    (closeEvent)="closeDialog()"
+  >
+    <add-song-form (addSongEvent)="addSong($event)"></add-song-form>
+  </generic-modal>
 </div>

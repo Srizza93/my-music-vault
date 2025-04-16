@@ -23,4 +23,9 @@ export class MusicApi {
     const url = `${environment.supabaseUrl}/rest/v1/songs`;
     return this.http.get<Song[]>(url, { headers: this.headers });
   }
+
+  addSong(song: Song): Observable<Song> {
+    const url = `${environment.supabaseUrl}/rest/v1/songs`;
+    return this.http.post<Song>(url, [song], { headers: this.headers });
+  }
 }

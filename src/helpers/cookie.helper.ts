@@ -20,10 +20,12 @@ export class CookieHelper {
     document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
 
-  setCookie(cookieName: string, cookieValue: string, days: number): void {
+  setCookie(cookieName: string, cookieValue: string, seconds: number): void {
     const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    date.setTime(date.getTime() + seconds * 1000);
     const expires = 'expires=' + date.toUTCString();
-    document.cookie = `${cookieName}=${cookieValue}; ${expires}; path=/`;
+    document.cookie = `${cookieName}=${encodeURIComponent(
+      cookieValue
+    )}; ${expires}; path=/`;
   }
 }

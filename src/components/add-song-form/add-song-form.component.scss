@@ -1,0 +1,38 @@
+.add-song-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--white);
+  border-radius: 0.5rem;
+}
+
+.input-container {
+  &--rating-input {
+    display: none;
+  }
+
+  &__rating-input {
+    display: none;
+  }
+
+  mat-icon {
+    cursor: pointer;
+    color: #ff9800;
+    width: 35px;
+    height: 35px;
+    font-size: 35px;
+    margin-top: 15px;
+
+    &:hover {
+      color: #ffb74d;
+    }
+  }
+}
+
+.filled {
+  color: #aaa !important;
+
+  &:hover {
+    color: #ff9800 !important;
+  }
+}

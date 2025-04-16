@@ -1,0 +1,34 @@
+<div class="my-music-vault">
+  <header class="my-music-vault-header">
+    <h1 id="auth-heading" class="auth-heading">
+      {{ "my-music-vault--heading" | translate }}
+    </h1>
+    <button mat-raised-button (click)="logout()">
+      {{ "logout--label" | translate }}
+    </button>
+  </header>
+  <section>
+    <button
+      mat-raised-button
+      type="button"
+      (click)="openDialog()"
+      aria-label="Add Music"
+      aria-describedby="add-music-instructions"
+      class="add-music-button"
+    >
+      {{ "add-music--button" | translate }}
+    </button>
+  </section>
+  <music-table
+    [musicList]="dataForTable.musicList"
+    [displayedColumns]="dataForTable.displayedColumns"
+    [columnsTranslations]="dataForTable.columnsTranslations"
+  />
+  <generic-modal
+    *ngIf="isDialogOpen"
+    [modalTitle]="'add-music--modal--title' | translate"
+    (closeEvent)="closeDialog()"
+  >
+    <add-song-form (addSongEvent)="addSong($event)"></add-song-form>
+  </generic-modal>
+</div>

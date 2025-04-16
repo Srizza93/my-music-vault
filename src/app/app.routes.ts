@@ -6,9 +6,11 @@ export const routes: Routes = [
   { path: '', redirectTo: '/authentication', pathMatch: 'full' },
   { path: 'authentication', component: AuthenticationComponent },
   {
-    path: 'user',
+    path: 'my-music-vault',
     loadComponent: () =>
-      import('@/pages/user/user.component').then((m) => m.UserComponent),
+      import('@/pages/my-music-vault/my-music-vault.component').then(
+        (m) => m.MyMusicVaultComponent
+      ),
     canActivate: [authGuard],
   },
   { path: '**', component: AuthenticationComponent },

@@ -1,0 +1,163 @@
+<form
+  [formGroup]="addSongForm"
+  (ngSubmit)="addSong()"
+  aria-labelledby="add-song-form"
+  aria-describedby="add-song-instructions"
+  class="add-song-form"
+>
+  <mat-form-field class="input-container">
+    <mat-label id="title-label">{{
+      "song-title--label" | translate
+    }}</mat-label>
+    <input
+      matInput
+      formControlName="title"
+      type="text"
+      aria-required="true"
+      aria-describedby="text-error"
+      autocomplete="title"
+    />
+    <mat-error *ngIf="title?.hasError('required')" id="title-error">
+      {{ "field-required--label" | translate }}
+    </mat-error>
+    <mat-error
+      *ngIf="title?.hasError('title') && !title?.hasError('required')"
+      id="title-format-error"
+    >
+      {{ "text--error--label" | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input-container">
+    <mat-label id="artist-label">{{
+      "song-artist--label" | translate
+    }}</mat-label>
+    <input
+      matInput
+      formControlName="artist"
+      type="text"
+      aria-required="true"
+      aria-describedby="text-error"
+      autocomplete="artist"
+    />
+    <mat-error *ngIf="artist?.hasError('required')" id="artist-error">
+      {{ "field-required--label" | translate }}
+    </mat-error>
+    <mat-error
+      *ngIf="artist?.hasError('artist') && !artist?.hasError('required')"
+      id="artist-format-error"
+    >
+      {{ "text--error--label" | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input-container">
+    <mat-label id="album-label">{{
+      "song-album--label" | translate
+    }}</mat-label>
+    <input
+      matInput
+      formControlName="album"
+      type="text"
+      aria-describedby="text-error"
+      autocomplete="album"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="input-container">
+    <mat-label id="genre-label">{{
+      "song-genre--label" | translate
+    }}</mat-label>
+    <select
+      matNativeControl
+      formControlName="genre"
+      aria-required="true"
+      aria-describedby="genre-error"
+      autocomplete="genre"
+    >
+      <option value="" disabled selected>
+        {{ "song-genre--placeholder" | translate }}
+      </option>
+      <option *ngFor="let genre of genres" [value]="genre">
+        {{ genre }}
+      </option>
+    </select>
+    <mat-error *ngIf="genre?.hasError('required')" id="genre-error">
+      {{ "field-required--label" | translate }}
+    </mat-error>
+    <mat-error
+      *ngIf="genre?.hasError('genre') && !genre?.hasError('required')"
+      id="genre-format-error"
+    >
+      {{ "text--error--label" | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input-container">
+    <mat-label id="mood-label">{{ "song-mood--label" | translate }}</mat-label>
+    <select
+      matNativeControl
+      formControlName="mood"
+      aria-required="true"
+      aria-describedby="mood-error"
+      autocomplete="mood"
+    >
+      <option value="" disabled selected>
+        {{ "song-mood--placeholder" | translate }}
+      </option>
+      <option *ngFor="let mood of moods" [value]="mood">
+        {{ mood }}
+      </option>
+    </select>
+    <mat-error *ngIf="mood?.hasError('required')" id="mood-error">
+      {{ "field-required--label" | translate }}
+    </mat-error>
+    <mat-error
+      *ngIf="mood?.hasError('mood') && !mood?.hasError('required')"
+      id="mood-format-error"
+    >
+      {{ "text--error--label" | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input-container input-container--rating">
+    <mat-label id="rating-label">{{
+      "song-rating--label" | translate
+    }}</mat-label>
+    <mat-icon
+      *ngFor="let star of stars; let i = index"
+      [class.filled]="i > rating?.value - 1"
+      (click)="onRatingChange(i + 1)"
+      (keydown.enter)="onRatingChange(i + 1)"
+      tabindex="0"
+      role="button"
+      color="warn"
+    >
+      star_rate
+    </mat-icon>
+    <input
+      class="input-container__rating-input"
+      matInput
+      type="number"
+      formControlName="rating"
+      [value]="rating?.value"
+      aria-required="true"
+      aria-describedby="rating-error"
+      autocomplete="rating"
+      readonly
+    />
+    <mat-error *ngIf="rating?.hasError('required')" id="rating-error">
+      {{ "rating-required--label" | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="addSongForm.invalid"
+    [attr.aria-disabled]="addSongForm.invalid"
+  >
+    {{ "add-song--button" | translate }}
+  </button>
+</form>

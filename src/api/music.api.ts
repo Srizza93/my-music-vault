@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@/environments/environment';
 import { CookieHelper, JWT_COOKIE_NAME } from '@/helpers/cookie.helper';
 import { Observable } from 'rxjs';
-import { Song } from '@/types/song.interface';
+import { Song } from '@/types/song.model';
 
 @Injectable({
   providedIn: 'root',

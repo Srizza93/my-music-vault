@@ -69,7 +69,8 @@ export class AuthenticationComponent {
       next: (response: Login) => {
         this.authenticationService.login(
           response.access_token,
-          response.expires_in
+          response.expires_in,
+          response.user.id
         );
         this.toaster.showToast(
           this.translate.instant('login-success--label'),

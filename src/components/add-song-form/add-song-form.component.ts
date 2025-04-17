@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Song } from '@/types/song.interface';
+import { Song } from '@/types/song.model';
 
 @Component({
   selector: 'add-song-form',
@@ -30,44 +30,12 @@ import { Song } from '@/types/song.interface';
   standalone: true,
 })
 export class AddSongFormComponent {
+  @Input() genres: string[] = [];
+  @Input() moods: string[] = [];
   @Output() addSongEvent = new EventEmitter<Song>();
 
   addSongForm: FormGroup;
   stars: number[] = [1, 2, 3, 4, 5];
-  genres: string[] = [
-    'Pop',
-    'Rock',
-    'Hip-Hop',
-    'Jazz',
-    'Classical',
-    'Country',
-    'Electronic',
-    'Reggae',
-    'Blues',
-    'Folk',
-    'R&B',
-    'Metal',
-    'Punk',
-    'Indie',
-    'Latin',
-    'Gospel',
-    'Soul',
-    'Alternative',
-    'Disco',
-    'Funk',
-    'Ska',
-    'Grunge',
-    'New Wave',
-  ];
-  moods: string[] = [
-    'happy',
-    'sad',
-    'angry',
-    'relaxed',
-    'energetic',
-    'romantic',
-    'nostalgic',
-  ];
 
   constructor(private fb: FormBuilder) {
     this.addSongForm = this.fb.group({
@@ -75,16 +43,7 @@ export class AddSongFormComponent {
       artist: ['', [Validators.required, Validators.maxLength(100)]],
       album: ['', [Validators.maxLength(100)]],
       genre: ['', [Validators.required, Validators.maxLength(50)]],
-      mood: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(50),
-          Validators.pattern(
-            '^(happy|sad|angry|relaxed|energetic|romantic|nostalgic)$'
-          ),
-        ],
-      ],
+      mood: ['', [Validators.required, Validators.maxLength(50)]],
       rating: [
         '',
         [

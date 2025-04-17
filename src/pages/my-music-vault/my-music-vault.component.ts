@@ -10,9 +10,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthenticationService } from '@/services/authentication.service';
 import { MusicApi } from '@/api/music.api';
 import { ToasterService, ToastType } from '@/services/toaster.service';
-import { Song } from '@/types/song.interface';
+import { Song } from '@/types/song.model';
 import { GenericModalComponent } from '@/components/generic-modal/generic-modal.component';
 import { AddSongFormComponent } from '@/components/add-song-form/add-song-form.component';
+import {
+  LocalStorageHelper,
+  LOCAL_STORAGE_USER_ID,
+} from '@/helpers/local-storage.helper';
+import { GenresApi } from '@/api/genres.api';
+import { MoodsApi } from '@/api/moods.api';
 
 @Component({
   selector: 'app-my-music-vault',
@@ -33,11 +39,16 @@ export class MyMusicVaultComponent {
   constructor(
     private authenticationService: AuthenticationService,
     private musicApi: MusicApi,
+    private genresApi: GenresApi,
+    private moodsApi: MoodsApi,
     private toaster: ToasterService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private localStorageHelper: LocalStorageHelper
   ) {}
 
   musicList: Song[] = [];
+  genres: string[] = [];
+  moods: string[] = [];
   isDialogOpen: boolean = false;
 
   get dataForTable() {
@@ -59,25 +70,12 @@ export class MyMusicVaultComponent {
     };
   }
 
-  ngOnInit() {
-    this.initMusicList();
-  }
-
-  initMusicList() {
-    this.musicApi.getMusicListByUser().subscribe({
-      next: (response) => {
-        this.musicList = response;
-      },
-      error: () => {
-        this.toaster.showToast('Error fetching music list', ToastType.ERROR);
-      },
-    });
-  }
-
   addSong(newSong: Song) {
+    newSong.user_id = this.localStorageHelper.getItem(LOCAL_STORAGE_USER_ID);
+
     this.musicApi.addSong(newSong).subscribe({
       next: () => {
-        this.initMusicList;
+        this.initMusicList();
         this.isDialogOpen = false;
         this.toaster.showToast(
           this.translate.instant('song-added--label'),
@@ -87,6 +85,45 @@ export class MyMusicVaultComponent {
       error: () => {
         this.toaster.showToast(
           this.translate.instant('song-add-error--label'),
+          ToastType.ERROR
+        );
+      },
+    });
+  }
+
+  initMusicList() {
+    this.musicApi.getMusicListByUser().subscribe({
+      next: (response) => {
+        this.musicList = response;
+      },
+      error: () => {
+        this.toaster.showToast('music-fetc-error--label', ToastType.ERROR);
+      },
+    });
+  }
+
+  initData() {
+    this.initMusicList();
+
+    this.genresApi.getGenres().subscribe({
+      next: (response) => {
+        this.genres = response.map((genre) => genre.name);
+      },
+      error: () => {
+        this.toaster.showToast(
+          this.translate.instant('genres-fetch-error--label'),
+          ToastType.ERROR
+        );
+      },
+    });
+
+    this.moodsApi.getMoods().subscribe({
+      next: (response) => {
+        this.moods = response.map((mood) => mood.name);
+      },
+      error: () => {
+        this.toaster.showToast(
+          this.translate.instant('moods-fetch-error--label'),
           ToastType.ERROR
         );
       },
@@ -103,5 +140,9 @@ export class MyMusicVaultComponent {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  ngOnInit() {
+    this.initData();
   }
 }

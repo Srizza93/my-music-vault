@@ -19,7 +19,7 @@
   "password--label": "Password",
   "password-required--label": "Password is required",
   "register": "Register",
-  "search--placeholder": "Search by song title",
+  "search--placeholder": "Search by one of the fields",
   "song-title--label": "Title",
   "song-artist--label": "Artist",
   "song-album--label": "Album",

@@ -29,6 +29,10 @@
     [modalTitle]="'add-music--modal--title' | translate"
     (closeEvent)="closeDialog()"
   >
-    <add-song-form (addSongEvent)="addSong($event)"></add-song-form>
+    <add-song-form
+      (addSongEvent)="addSong($event)"
+      [genres]="genres"
+      [moods]="moods"
+    ></add-song-form>
   </generic-modal>
 </div>

@@ -6,7 +6,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Song } from '@/types/song.interface';
+import { Song } from '@/types/song.model';
 import { isEqual } from 'lodash';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateModule } from '@ngx-translate/core';

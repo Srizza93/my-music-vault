@@ -6,7 +6,7 @@ export interface Song {
   genre: string;
   mood: string;
   rating: number;
-  user_id?: string;
+  user_id?: string | null;
   spotify_url?: string;
   cover_url?: string;
   created_at?: string;

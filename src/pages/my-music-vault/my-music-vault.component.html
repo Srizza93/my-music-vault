@@ -3,7 +3,7 @@
     <h1 id="auth-heading" class="auth-heading">
       {{ "my-music-vault--heading" | translate }}
     </h1>
-    <button mat-raised-button (click)="logout()">
+    <button mat-raised-button (click)="logout()" class="logout">
       {{ "logout--label" | translate }}
     </button>
   </header>
@@ -14,7 +14,7 @@
       (click)="openDialog()"
       aria-label="Add Music"
       aria-describedby="add-music-instructions"
-      class="add-music-button"
+      class="add-music-button common-button"
     >
       {{ "add-music--button" | translate }}
     </button>

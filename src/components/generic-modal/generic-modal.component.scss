@@ -1,3 +1,5 @@
+@use "@/styles/global.scss" as *;
+
 .generic-modal {
   position: fixed;
   top: 0;
@@ -8,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: baseline;
-  z-index: 1000;
+  z-index: $z-index-5;
 }
 
 .modal-content {
@@ -16,8 +18,8 @@
   flex-direction: column;
   padding: 1rem 3rem 2rem 3rem;
   margin-top: 1.5rem;
-  border-radius: 0.25rem;
-  background-color: #fff;
+  border-radius: $border-radius;
+  background-color: $white;
   width: 100%;
   max-width: 30rem;
 
@@ -41,7 +43,7 @@
   margin-bottom: 1rem;
 
   &__title {
-    font-size: 1.5rem;
+    font-size: $medium-title;
     font-weight: bold;
   }
 

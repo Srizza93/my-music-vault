@@ -1,9 +1,11 @@
+@use "@/assets/global.scss" as *;
+
 .add-song-form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background: var(--white);
-  border-radius: 0.5rem;
+  background: $white;
+  border-radius: $border-radius;
 }
 
 .input-container {
@@ -13,22 +15,22 @@
 
   mat-icon {
     cursor: pointer;
-    color: #ff9800;
     width: 35px;
     height: 35px;
     font-size: 35px;
     margin-top: 15px;
+    color: $gray !important;
 
     &:hover {
-      opacity: 1;
+      opacity: $opacity;
     }
   }
 
   .filled {
-    color: #aaa !important;
+    color: $orange !important;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 1;
     }
   }
 }

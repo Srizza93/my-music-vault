@@ -126,7 +126,7 @@
     }}</mat-label>
     <mat-icon
       *ngFor="let star of stars; let i = index"
-      [class.filled]="i > rating?.value - 1"
+      [class.filled]="i < rating?.value"
       (click)="onRatingChange(i + 1)"
       (keydown.enter)="onRatingChange(i + 1)"
       tabindex="0"
@@ -157,6 +157,7 @@
     type="submit"
     [disabled]="addSongForm.invalid"
     [attr.aria-disabled]="addSongForm.invalid"
+    class="common-button"
   >
     {{ "add-song--button" | translate }}
   </button>

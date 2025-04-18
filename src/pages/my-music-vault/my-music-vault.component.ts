@@ -53,6 +53,7 @@ export class MyMusicVaultComponent {
 
   get dataForTable() {
     const musicListForDataTable = this.musicList.map((song) => ({
+      id: song.id,
       title: song.title,
       artist: song.artist,
       album: song.album,
@@ -60,13 +61,27 @@ export class MyMusicVaultComponent {
       mood: song.mood,
       rating: song.rating,
     }));
-    const displayedColumns = Object.keys(musicListForDataTable[0] || {});
+    const displayedColumns = Object.keys(musicListForDataTable[0] || {}).filter(
+      (key) => key !== 'id'
+    );
+
+    if (!displayedColumns.includes('actions')) {
+      displayedColumns.push('actions');
+    }
+
     return {
       musicList: musicListForDataTable,
       displayedColumns,
       columnsTranslations: displayedColumns.map((column) =>
         this.translate.instant(`song-${column.toLowerCase()}--label`)
       ),
+      actions: [
+        {
+          label: this.translate.instant('delete--label'),
+          icon: 'delete',
+          action: this.deleteSong.bind(this),
+        },
+      ],
     };
   }
 
@@ -85,6 +100,24 @@ export class MyMusicVaultComponent {
       error: () => {
         this.toaster.showToast(
           this.translate.instant('song-add-error--label'),
+          ToastType.ERROR
+        );
+      },
+    });
+  }
+
+  deleteSong(song: Song) {
+    this.musicApi.deleteSong(song.id!).subscribe({
+      next: () => {
+        this.initMusicList();
+        this.toaster.showToast(
+          this.translate.instant('song-deleted--label'),
+          ToastType.SUCCESS
+        );
+      },
+      error: () => {
+        this.toaster.showToast(
+          this.translate.instant('song-delete-error--label'),
           ToastType.ERROR
         );
       },

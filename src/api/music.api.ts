@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '@/environments/environment';
 import { CookieHelper, JWT_COOKIE_NAME } from '@/helpers/cookie.helper';
 import { Observable } from 'rxjs';
 import { Song } from '@/types/song.model';
+import { API_URL, SONGS_ENDPOINT } from '@/constants/endpointsConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -20,12 +21,20 @@ export class MusicApi {
   }
 
   getMusicListByUser(): Observable<Song[]> {
-    const url = `${environment.supabaseUrl}/rest/v1/songs`;
+    const url = `${API_URL}${SONGS_ENDPOINT}`;
     return this.http.get<Song[]>(url, { headers: this.headers });
   }
 
   addSong(song: Song): Observable<Song> {
-    const url = `${environment.supabaseUrl}/rest/v1/songs`;
+    const url = `${API_URL}${SONGS_ENDPOINT}`;
     return this.http.post<Song>(url, [song], { headers: this.headers });
+  }
+
+  deleteSong(id: string): Observable<void> {
+    const url = `${API_URL}${SONGS_ENDPOINT}`;
+    return this.http.delete<void>(url, {
+      headers: this.headers,
+      params: new HttpParams().set('id', 'eq.' + id),
+    });
   }
 }

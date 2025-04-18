@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@/environments/environment';
 import { Login } from '@/types/login.interface';
 import { Observable } from 'rxjs';
+import { AUTH_URL } from '@/constants/endpointsConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class LoginApi {
     });
   }
   login(email: string, password: string): Observable<Login> {
-    const url = `${environment.supabaseUrl}/auth/v1/token?grant_type=password`;
+    const url = AUTH_URL;
     const body = {
       email: email,
       password: password,

@@ -10,4 +10,11 @@ export interface Song {
   spotify_url?: string;
   cover_url?: string;
   created_at?: string;
+  actions?: SongAction[];
+}
+
+export interface SongAction {
+  label: string;
+  icon: string;
+  action: (song: Song) => void;
 }

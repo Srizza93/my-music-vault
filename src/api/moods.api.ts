@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@/environments/environment';
 import { Observable } from 'rxjs';
 import { Mood } from '@/types/mood.model';
+import { API_URL, MOODS_ENDPOINT } from '@/constants/endpointsConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,7 @@ export class MoodsApi {
     });
   }
   getMoods(): Observable<Mood[]> {
-    const url = `${environment.supabaseUrl}/rest/v1/moods`;
-
+    const url = `${API_URL}${MOODS_ENDPOINT}`;
     return this.http.get<Mood[]>(url, { headers: this.headers });
   }
 }

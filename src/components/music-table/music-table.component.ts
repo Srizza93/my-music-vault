@@ -6,7 +6,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Song } from '@/types/song.model';
+import { Song, SongAction } from '@/types/song.model';
 import { isEqual } from 'lodash';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateModule } from '@ngx-translate/core';
@@ -34,12 +34,24 @@ export class MusicTableComponent {
   @Input() musicList: Song[] = [];
   @Input() displayedColumns: string[] = [];
   @Input() columnsTranslations: string[] = [];
+  @Input() actions: SongAction[] = [];
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor() {
     this.dataSource = new MatTableDataSource();
+  }
+
+  isCustomColumn(column: string): boolean {
+    switch (column) {
+      case 'actions':
+        return true;
+      case 'rating':
+        return true;
+      default:
+        return false;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

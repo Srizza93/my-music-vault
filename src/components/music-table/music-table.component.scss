@@ -32,6 +32,14 @@ mat-icon {
   color: $gray !important;
 }
 
+.action-icon {
+  cursor: pointer;
+
+  &:hover {
+    opacity: $opacity;
+  }
+}
+
 .filled {
   color: $orange !important;
 }

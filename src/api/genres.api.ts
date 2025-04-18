@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@/environments/environment';
 import { Observable } from 'rxjs';
 import { Genre } from '@/types/genre.model';
+import { API_URL, GENRES_ENDPOINT } from '@/constants/endpointsConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class GenresApi {
     });
   }
   getGenres(): Observable<Genre[]> {
-    const url = `${environment.supabaseUrl}/rest/v1/genres`;
+    const url = `${API_URL}${GENRES_ENDPOINT}`;
 
     return this.http.get<Genre[]>(url, { headers: this.headers });
   }

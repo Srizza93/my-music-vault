@@ -27,3 +27,25 @@
     color: $white !important;
   }
 }
+
+.delete-song-modal-text {
+  font-weight: bold;
+  text-align: center;
+}
+
+.delete-song-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  &__delete-song-button {
+    background-color: $red !important;
+    color: $white !important;
+  }
+
+  &__cancel-button {
+    background-color: $dark !important;
+    color: $white !important;
+  }
+}

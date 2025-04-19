@@ -51,7 +51,9 @@ export class MyMusicVaultComponent {
   moods: string[] = [];
   isAddSongDialogOpen: boolean = false;
   isEditSongDialogOpen: boolean = false;
+  isDeleteSongDialogOpen: boolean = false;
   songToEdit: Song | null = null;
+  songToDelete: Song | null = null;
 
   get dataForTable() {
     const musicListForDataTable = this.musicList.map((song) => ({
@@ -81,7 +83,7 @@ export class MyMusicVaultComponent {
         {
           label: this.translate.instant('delete--label'),
           icon: 'delete',
-          action: this.deleteSong.bind(this),
+          action: this.openDeleteSongDialog.bind(this),
         },
         {
           label: this.translate.instant('edit--label'),
@@ -140,10 +142,19 @@ export class MyMusicVaultComponent {
     });
   }
 
-  deleteSong(song: Song) {
-    this.musicApi.deleteSong(song.id!).subscribe({
+  deleteSong() {
+    if (!this.songToDelete?.id) {
+      this.toaster.showToast(
+        this.translate.instant('song-delete-error--label'),
+        ToastType.ERROR
+      );
+      return;
+    }
+
+    this.musicApi.deleteSong(this.songToDelete.id!).subscribe({
       next: () => {
         this.initMusicList();
+        this.closeDeleteSongModal();
         this.toaster.showToast(
           this.translate.instant('song-deleted--label'),
           ToastType.SUCCESS
@@ -220,6 +231,16 @@ export class MyMusicVaultComponent {
   closeEditSongDialog() {
     this.songToEdit = null;
     this.isEditSongDialogOpen = false;
+  }
+
+  openDeleteSongDialog(song: Song) {
+    this.songToDelete = song;
+    this.isDeleteSongDialogOpen = true;
+  }
+
+  closeDeleteSongModal() {
+    this.songToDelete = null;
+    this.isDeleteSongDialogOpen = false;
   }
 
   logout() {

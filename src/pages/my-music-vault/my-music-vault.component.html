@@ -54,4 +54,36 @@
       [formButtonLabel]="'edit-song--button' | translate"
     ></song-form>
   </generic-modal>
+
+  <generic-modal
+    *ngIf="isDeleteSongDialogOpen"
+    [modalTitle]="'delete-song--modal--title' | translate"
+    (closeEvent)="closeDeleteSongModal()"
+  >
+    <p id="delete-song-instructions" class="delete-song-modal-text">
+      {{ "delete-song-confirmation--text" | translate }}
+    </p>
+    <div class="delete-song-modal-buttons">
+      <button
+        mat-raised-button
+        type="button"
+        (click)="closeDeleteSongModal()"
+        class="common-button delete-song-modal-buttons__cancel-button"
+        aria-label="Cancel"
+        aria-describedby="cancel-instructions"
+      >
+        {{ "cancel--button" | translate }}
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        (click)="deleteSong()"
+        class="common-button delete-song-modal-buttons__delete-song-button"
+        aria-label="Delete Song"
+        aria-describedby="delete-song-instructions"
+      >
+        {{ "delete--button" | translate }}
+      </button>
+    </div>
+  </generic-modal>
 </div>

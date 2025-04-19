@@ -1,12 +1,11 @@
 <div class="generic-modal">
-  <div class="modal-content">
+  <div #modalContent class="modal-content" tabindex="0">
     <div class="modal-header">
       <h3 *ngIf="modalTitle" id="modal-title" class="modal-header__title">
         {{ modalTitle }}
       </h3>
       <button
         mat-icon-button
-        class="close-button"
         (click)="closeModal()"
         aria-label="Close"
         aria-describedby="close-modal-instructions"

@@ -34,7 +34,7 @@ mat-icon {
 
 .action-icons {
   display: flex;
-  justify-content: space-around;
+  gap: 1rem;
 
   &__icon {
     cursor: pointer;

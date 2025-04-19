@@ -37,7 +37,10 @@
           <mat-icon
             *ngFor="let action of actions"
             (click)="action.action(song)"
+            (keydown.enter)="action.action(song)"
             class="action-icons__icon"
+            aria-hidden="false"
+            tabindex="0"
             >{{ action.icon }}</mat-icon
           >
         </div>

@@ -7,11 +7,12 @@
       {{ "logout--label" | translate }}
     </button>
   </header>
+
   <section>
     <button
       mat-raised-button
       type="button"
-      (click)="openDialog()"
+      (click)="openAddSongDialog()"
       aria-label="Add Music"
       aria-describedby="add-music-instructions"
       class="add-music-button common-button"
@@ -19,21 +20,38 @@
       {{ "add-music--button" | translate }}
     </button>
   </section>
+
   <music-table
     [musicList]="dataForTable.musicList"
     [displayedColumns]="dataForTable.displayedColumns"
     [columnsTranslations]="dataForTable.columnsTranslations"
     [actions]="dataForTable.actions"
   />
+
   <generic-modal
-    *ngIf="isDialogOpen"
+    *ngIf="isAddSongDialogOpen"
     [modalTitle]="'add-music--modal--title' | translate"
-    (closeEvent)="closeDialog()"
+    (closeEvent)="closeAddSongDialog()"
   >
-    <add-song-form
-      (addSongEvent)="addSong($event)"
+    <song-form
+      (songEvent)="addSong($event)"
       [genres]="genres"
       [moods]="moods"
-    ></add-song-form>
+      [formButtonLabel]="'add-song--button' | translate"
+    ></song-form>
+  </generic-modal>
+
+  <generic-modal
+    *ngIf="isEditSongDialogOpen"
+    [modalTitle]="'edit-music--modal--title' | translate"
+    (closeEvent)="closeEditSongDialog()"
+  >
+    <song-form
+      (songEvent)="editSong($event)"
+      [genres]="genres"
+      [moods]="moods"
+      [songToEdit]="songToEdit"
+      [formButtonLabel]="'edit-song--button' | translate"
+    ></song-form>
   </generic-modal>
 </div>

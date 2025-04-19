@@ -33,11 +33,11 @@
           >
         </div>
 
-        <div *ngIf="column === 'actions'">
+        <div *ngIf="column === 'actions'" class="action-icons">
           <mat-icon
             *ngFor="let action of actions"
             (click)="action.action(song)"
-            class="action-icon"
+            class="action-icons__icon"
             >{{ action.icon }}</mat-icon
           >
         </div>

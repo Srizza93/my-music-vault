@@ -12,7 +12,7 @@ import { MusicApi } from '@/api/music.api';
 import { ToasterService, ToastType } from '@/services/toaster.service';
 import { Song } from '@/types/song.model';
 import { GenericModalComponent } from '@/components/generic-modal/generic-modal.component';
-import { AddSongFormComponent } from '@/components/add-song-form/add-song-form.component';
+import { SongFormComponent } from '@/components/song-form/song-form.component';
 import {
   LocalStorageHelper,
   LOCAL_STORAGE_USER_ID,
@@ -31,7 +31,7 @@ import { MoodsApi } from '@/api/moods.api';
     MatButtonModule,
     GenericModalComponent,
     CommonModule,
-    AddSongFormComponent,
+    SongFormComponent,
   ],
   standalone: true,
 })
@@ -49,7 +49,9 @@ export class MyMusicVaultComponent {
   musicList: Song[] = [];
   genres: string[] = [];
   moods: string[] = [];
-  isDialogOpen: boolean = false;
+  isAddSongDialogOpen: boolean = false;
+  isEditSongDialogOpen: boolean = false;
+  songToEdit: Song | null = null;
 
   get dataForTable() {
     const musicListForDataTable = this.musicList.map((song) => ({
@@ -81,6 +83,11 @@ export class MyMusicVaultComponent {
           icon: 'delete',
           action: this.deleteSong.bind(this),
         },
+        {
+          label: this.translate.instant('edit--label'),
+          icon: 'edit',
+          action: this.openEditSongDialog.bind(this),
+        },
       ],
     };
   }
@@ -91,7 +98,7 @@ export class MyMusicVaultComponent {
     this.musicApi.addSong(newSong).subscribe({
       next: () => {
         this.initMusicList();
-        this.isDialogOpen = false;
+        this.closeAddSongDialog();
         this.toaster.showToast(
           this.translate.instant('song-added--label'),
           ToastType.SUCCESS
@@ -100,6 +107,33 @@ export class MyMusicVaultComponent {
       error: () => {
         this.toaster.showToast(
           this.translate.instant('song-add-error--label'),
+          ToastType.ERROR
+        );
+      },
+    });
+  }
+
+  editSong(song: Song) {
+    if (!this.songToEdit?.id) {
+      this.toaster.showToast(
+        this.translate.instant('song-edit-error--label'),
+        ToastType.ERROR
+      );
+      return;
+    }
+
+    this.musicApi.editSong(this.songToEdit.id, song).subscribe({
+      next: () => {
+        this.initMusicList();
+        this.closeEditSongDialog();
+        this.toaster.showToast(
+          this.translate.instant('song-edited--label'),
+          ToastType.SUCCESS
+        );
+      },
+      error: () => {
+        this.toaster.showToast(
+          this.translate.instant('song-edit-error--label'),
           ToastType.ERROR
         );
       },
@@ -130,45 +164,62 @@ export class MyMusicVaultComponent {
         this.musicList = response;
       },
       error: () => {
-        this.toaster.showToast('music-fetc-error--label', ToastType.ERROR);
-      },
-    });
-  }
-
-  initData() {
-    this.initMusicList();
-
-    this.genresApi.getGenres().subscribe({
-      next: (response) => {
-        this.genres = response.map((genre) => genre.name);
-      },
-      error: () => {
         this.toaster.showToast(
-          this.translate.instant('genres-fetch-error--label'),
-          ToastType.ERROR
-        );
-      },
-    });
-
-    this.moodsApi.getMoods().subscribe({
-      next: (response) => {
-        this.moods = response.map((mood) => mood.name);
-      },
-      error: () => {
-        this.toaster.showToast(
-          this.translate.instant('moods-fetch-error--label'),
+          this.translate.instant('music-fetch-error--label'),
           ToastType.ERROR
         );
       },
     });
   }
 
-  openDialog() {
-    this.isDialogOpen = true;
+  initDialogData() {
+    if (this.genres.length === 0) {
+      this.genresApi.getGenres().subscribe({
+        next: (response) => {
+          this.genres = response.map((genre) => genre.name);
+        },
+        error: () => {
+          this.toaster.showToast(
+            this.translate.instant('genres-fetch-error--label'),
+            ToastType.ERROR
+          );
+        },
+      });
+    }
+
+    if (this.moods.length === 0) {
+      this.moodsApi.getMoods().subscribe({
+        next: (response) => {
+          this.moods = response.map((mood) => mood.name);
+        },
+        error: () => {
+          this.toaster.showToast(
+            this.translate.instant('moods-fetch-error--label'),
+            ToastType.ERROR
+          );
+        },
+      });
+    }
   }
 
-  closeDialog() {
-    this.isDialogOpen = false;
+  openAddSongDialog() {
+    this.initDialogData();
+    this.isAddSongDialogOpen = true;
+  }
+
+  closeAddSongDialog() {
+    this.isAddSongDialogOpen = false;
+  }
+
+  openEditSongDialog(song: Song) {
+    this.initDialogData();
+    this.songToEdit = song;
+    this.isEditSongDialogOpen = true;
+  }
+
+  closeEditSongDialog() {
+    this.songToEdit = null;
+    this.isEditSongDialogOpen = false;
   }
 
   logout() {
@@ -176,6 +227,6 @@ export class MyMusicVaultComponent {
   }
 
   ngOnInit() {
-    this.initData();
+    this.initMusicList();
   }
 }

@@ -14,9 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { Song } from '@/types/song.model';
 
 @Component({
-  selector: 'add-song-form',
-  templateUrl: './add-song-form.component.html',
-  styleUrls: ['./add-song-form.component.scss'],
+  selector: 'song-form',
+  templateUrl: './song-form.component.html',
+  styleUrls: ['./song-form.component.scss'],
   imports: [
     ReactiveFormsModule,
     TranslatePipe,
@@ -29,16 +29,19 @@ import { Song } from '@/types/song.model';
   ],
   standalone: true,
 })
-export class AddSongFormComponent {
+export class SongFormComponent {
+  @Input() songToEdit: Song | null = null;
   @Input() genres: string[] = [];
   @Input() moods: string[] = [];
-  @Output() addSongEvent = new EventEmitter<Song>();
+  @Input() formButtonLabel: string = '';
 
-  addSongForm: FormGroup;
+  @Output() songEvent = new EventEmitter<Song>();
+
+  songForm: FormGroup;
   stars: number[] = [1, 2, 3, 4, 5];
 
   constructor(private fb: FormBuilder) {
-    this.addSongForm = this.fb.group({
+    this.songForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(100)]],
       artist: ['', [Validators.required, Validators.maxLength(100)]],
       album: ['', [Validators.maxLength(100)]],
@@ -57,34 +60,47 @@ export class AddSongFormComponent {
   }
 
   get title() {
-    return this.addSongForm.get('title');
+    return this.songForm.get('title');
   }
 
   get artist() {
-    return this.addSongForm.get('artist');
+    return this.songForm.get('artist');
   }
 
   get album() {
-    return this.addSongForm.get('album');
+    return this.songForm.get('album');
   }
 
   get genre() {
-    return this.addSongForm.get('genre');
+    return this.songForm.get('genre');
   }
 
   get mood() {
-    return this.addSongForm.get('mood');
+    return this.songForm.get('mood');
   }
 
   get rating() {
-    return this.addSongForm.get('rating');
+    return this.songForm.get('rating');
+  }
+
+  ngOnInit() {
+    if (this.songToEdit) {
+      this.songForm.patchValue({
+        title: this.songToEdit.title,
+        artist: this.songToEdit.artist,
+        album: this.songToEdit.album,
+        genre: this.songToEdit.genre,
+        mood: this.songToEdit.mood,
+        rating: this.songToEdit.rating,
+      });
+    }
   }
 
   onRatingChange(rating: number) {
-    this.addSongForm.get('rating')?.setValue(rating);
+    this.songForm.get('rating')?.setValue(rating);
   }
 
-  addSong() {
-    this.addSongEvent.emit(this.addSongForm.value);
+  emitSongEvent() {
+    this.songEvent.emit(this.songForm.value);
   }
 }

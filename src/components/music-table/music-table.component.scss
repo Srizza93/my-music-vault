@@ -32,10 +32,15 @@ mat-icon {
   color: $gray !important;
 }
 
-.action-icon {
-  cursor: pointer;
+.action-icons {
+  display: flex;
+  justify-content: space-around;
 
-  &:hover {
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__icon:hover {
     opacity: $opacity;
   }
 }

@@ -21,13 +21,21 @@ export class MusicApi {
   }
 
   getMusicListByUser(): Observable<Song[]> {
-    const url = `${API_URL}${SONGS_ENDPOINT}`;
+    const url = `${API_URL}${SONGS_ENDPOINT}?order=created_at.desc`;
     return this.http.get<Song[]>(url, { headers: this.headers });
   }
 
   addSong(song: Song): Observable<Song> {
     const url = `${API_URL}${SONGS_ENDPOINT}`;
     return this.http.post<Song>(url, [song], { headers: this.headers });
+  }
+
+  editSong(id: string, song: Partial<Song>): Observable<Song> {
+    const url = `${API_URL}${SONGS_ENDPOINT}`;
+    return this.http.patch<Song>(url, [song], {
+      headers: this.headers,
+      params: new HttpParams().set('id', 'eq.' + id),
+    });
   }
 
   deleteSong(id: string): Observable<void> {

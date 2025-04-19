@@ -1,9 +1,9 @@
 <form
-  [formGroup]="addSongForm"
-  (ngSubmit)="addSong()"
+  [formGroup]="songForm"
+  (ngSubmit)="emitSongEvent()"
   aria-labelledby="add-song-form"
   aria-describedby="add-song-instructions"
-  class="add-song-form"
+  class="song-form"
 >
   <mat-form-field class="input-container">
     <mat-label id="title-label">{{
@@ -130,6 +130,7 @@
       (click)="onRatingChange(i + 1)"
       (keydown.enter)="onRatingChange(i + 1)"
       tabindex="0"
+      aria-hidden="false"
       role="button"
       color="warn"
     >
@@ -155,10 +156,10 @@
     mat-raised-button
     color="primary"
     type="submit"
-    [disabled]="addSongForm.invalid"
-    [attr.aria-disabled]="addSongForm.invalid"
+    [disabled]="songForm.invalid"
+    [attr.aria-disabled]="songForm.invalid"
     class="common-button"
   >
-    {{ "add-song--button" | translate }}
+    {{ formButtonLabel }}
   </button>
 </form>

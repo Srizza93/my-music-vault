@@ -1,3 +1,4 @@
+import { AppLocaleService } from '@/services/app-locale.service';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,7 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   constructor(private translate: TranslateService) {
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
+    const defaultLang = AppLocaleService.getAppLocale();
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
   }
 }

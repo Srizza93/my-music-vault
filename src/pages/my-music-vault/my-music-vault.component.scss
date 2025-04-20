@@ -1,0 +1,53 @@
+@use "@/styles/global.scss" as *;
+
+.my-music-vault {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-music-vault-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.add-music-button {
+  margin-bottom: 1rem;
+}
+
+.logout {
+  color: $dark !important;
+  background-color: $white !important;
+  border: 1px solid $dark !important;
+  font-weight: bold;
+  border-radius: $border-radius;
+
+  &:hover {
+    background-color: $dark !important;
+    color: $white !important;
+  }
+}
+
+.delete-song-modal-text {
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.delete-song-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  &__delete-song-button {
+    background-color: $red !important;
+    color: $white !important;
+  }
+
+  &__cancel-button {
+    background-color: $dark !important;
+    color: $white !important;
+  }
+}

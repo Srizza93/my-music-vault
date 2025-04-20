@@ -1,0 +1,61 @@
+@use "@/styles/global.scss" as *;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  font-family: $font-family;
+  font-size: $font-size;
+  background-color: $white;
+}
+body {
+  margin: 0;
+}
+
+.success-snackbar {
+  .mdc-snackbar__surface {
+    background-color: $green !important;
+  }
+
+  .mdc-snackbar__label,
+  .mat-mdc-button {
+    color: $white !important;
+  }
+}
+
+.error-snackbar {
+  .mdc-snackbar__surface {
+    background-color: $red !important;
+  }
+
+  .mdc-snackbar__label,
+  .mat-mdc-button {
+    color: $white !important;
+  }
+}
+
+.common-button {
+  background-color: $dark !important;
+  color: $white !important;
+  border-radius: $border-radius !important;
+
+  &:hover {
+    background-color: $white !important;
+    color: $dark !important;
+  }
+
+  &:disabled {
+    opacity: $disabled-opacity !important;
+  }
+
+  &:focus {
+    outline: 2px solid blue !important;
+    outline-offset: 2px !important;
+  }
+}

@@ -1,0 +1,64 @@
+@use "@/styles/global.scss" as *;
+
+.mdc-text-field--filled {
+  width: 100%;
+  background-color: $light-gray !important;
+  border-radius: $border-radius !important;
+}
+
+table {
+  th,
+  td {
+    font-size: $font-size;
+    font-weight: normal;
+    border: none !important;
+  }
+
+  th {
+    background-color: $light-gray !important;
+  }
+}
+
+.music-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.song-cell {
+  white-space: nowrap;
+}
+
+mat-icon {
+  color: $gray !important;
+}
+
+.action-icons {
+  display: flex;
+  gap: 1rem;
+
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__icon:hover {
+    opacity: $opacity;
+  }
+}
+
+.filled {
+  color: $orange !important;
+}
+
+.mat-mdc-row {
+  background-color: $light-gray !important;
+
+  &:nth-child(odd) {
+    background-color: $white !important;
+  }
+}
+
+.mat-mdc-paginator {
+  background-color: $light-gray !important;
+  font-size: $font-size !important;
+  border-top: 2px solid $white !important;
+}

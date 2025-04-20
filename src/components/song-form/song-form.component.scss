@@ -1,0 +1,36 @@
+@use "@/styles/global.scss" as *;
+
+.song-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: $white;
+  border-radius: $border-radius;
+}
+
+.input-container {
+  &__rating-input {
+    display: none;
+  }
+
+  mat-icon {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    font-size: 35px;
+    margin-top: 15px;
+    color: $gray !important;
+
+    &:hover {
+      opacity: $opacity;
+    }
+  }
+
+  .filled {
+    color: $orange !important;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

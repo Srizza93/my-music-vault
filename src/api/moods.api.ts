@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@/environments/environment';
-import { Login } from '@/types/login.interface';
 import { Observable } from 'rxjs';
-import { AUTH_URL } from '@/constants/endpointsConstants';
+import { Mood } from '@/types/mood.model';
+import { API_URL, MOODS_ENDPOINT } from '@/constants/endpointsConstants';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginApi {
+export class MoodsApi {
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -17,13 +17,8 @@ export class LoginApi {
       'Content-Type': 'application/json',
     });
   }
-  login(email: string, password: string): Observable<Login> {
-    const url = AUTH_URL;
-    const body = {
-      email: email,
-      password: password,
-    };
-
-    return this.http.post<Login>(url, body, { headers: this.headers });
+  getMoods(): Observable<Mood[]> {
+    const url = `${API_URL}${MOODS_ENDPOINT}`;
+    return this.http.get<Mood[]>(url, { headers: this.headers });
   }
 }

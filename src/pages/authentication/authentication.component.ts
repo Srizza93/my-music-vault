@@ -5,7 +5,6 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   TranslatePipe,
   TranslateModule,
@@ -14,6 +13,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { LoginApi } from '@/api/login.api';
 import type { Login } from '@/types/login.interface';
@@ -33,14 +33,15 @@ import { ToasterService, ToastType } from '@/services/toaster.service';
     MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
 })
 export class AuthenticationComponent {
   loginForm: FormGroup;
+  isPasswordVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private loginApi: LoginApi,
     private authenticationService: AuthenticationService,
     private translate: TranslateService,
@@ -66,8 +67,11 @@ export class AuthenticationComponent {
     const { email, password } = this.loginForm.value;
     this.loginApi.login(email, password).subscribe({
       next: (response: Login) => {
-        this.authenticationService.login(response.access_token);
-        this.router.navigate(['/user']);
+        this.authenticationService.login(
+          response.access_token,
+          response.expires_in,
+          response.user.id
+        );
         this.toaster.showToast(
           this.translate.instant('login-success--label'),
           ToastType.SUCCESS
@@ -81,5 +85,9 @@ export class AuthenticationComponent {
         this.loginForm.reset();
       },
     });
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 }

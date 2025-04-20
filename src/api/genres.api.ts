@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@/environments/environment';
-import { Login } from '@/types/login.interface';
 import { Observable } from 'rxjs';
-import { AUTH_URL } from '@/constants/endpointsConstants';
+import { Genre } from '@/types/genre.model';
+import { API_URL, GENRES_ENDPOINT } from '@/constants/endpointsConstants';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginApi {
+export class GenresApi {
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -17,13 +17,9 @@ export class LoginApi {
       'Content-Type': 'application/json',
     });
   }
-  login(email: string, password: string): Observable<Login> {
-    const url = AUTH_URL;
-    const body = {
-      email: email,
-      password: password,
-    };
+  getGenres(): Observable<Genre[]> {
+    const url = `${API_URL}${GENRES_ENDPOINT}`;
 
-    return this.http.post<Login>(url, body, { headers: this.headers });
+    return this.http.get<Genre[]>(url, { headers: this.headers });
   }
 }

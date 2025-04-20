@@ -1,0 +1,89 @@
+<div class="my-music-vault">
+  <header class="my-music-vault-header">
+    <h1 id="auth-heading" class="auth-heading">
+      {{ "my-music-vault--heading" | translate }}
+    </h1>
+    <button mat-raised-button (click)="logout()" class="common-button logout">
+      {{ "logout--label" | translate }}
+    </button>
+  </header>
+
+  <section>
+    <button
+      mat-raised-button
+      type="button"
+      (click)="openAddSongDialog()"
+      aria-label="Add Music"
+      aria-describedby="add-music-instructions"
+      class="add-music-button common-button"
+    >
+      {{ "add-music--button" | translate }}
+    </button>
+  </section>
+
+  <music-table
+    [musicList]="dataForTable.musicList"
+    [displayedColumns]="dataForTable.displayedColumns"
+    [columnsTranslations]="dataForTable.columnsTranslations"
+    [actions]="dataForTable.actions"
+  />
+
+  <generic-modal
+    *ngIf="isAddSongDialogOpen"
+    [modalTitle]="'add-music--modal--title' | translate"
+    (closeEvent)="closeAddSongDialog()"
+  >
+    <song-form
+      (songEvent)="addSong($event)"
+      [genres]="genres"
+      [moods]="moods"
+      [formButtonLabel]="'add-song--button' | translate"
+    ></song-form>
+  </generic-modal>
+
+  <generic-modal
+    *ngIf="isEditSongDialogOpen"
+    [modalTitle]="'edit-music--modal--title' | translate"
+    (closeEvent)="closeEditSongDialog()"
+  >
+    <song-form
+      (songEvent)="editSong($event)"
+      [genres]="genres"
+      [moods]="moods"
+      [songToEdit]="songToEdit"
+      [formButtonLabel]="'edit-song--button' | translate"
+    ></song-form>
+  </generic-modal>
+
+  <generic-modal
+    *ngIf="isDeleteSongDialogOpen"
+    [modalTitle]="'delete-song--modal--title' | translate"
+    (closeEvent)="closeDeleteSongModal()"
+  >
+    <p id="delete-song-instructions" class="delete-song-modal-text">
+      {{ "delete-song-confirmation--text" | translate }}
+    </p>
+    <div class="delete-song-modal-buttons">
+      <button
+        mat-raised-button
+        type="button"
+        (click)="closeDeleteSongModal()"
+        class="common-button delete-song-modal-buttons__cancel-button"
+        aria-label="Cancel"
+        aria-describedby="cancel-instructions"
+      >
+        {{ "cancel--button" | translate }}
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        (click)="deleteSong()"
+        class="common-button delete-song-modal-buttons__delete-song-button"
+        aria-label="Delete Song"
+        aria-describedby="delete-song-instructions"
+      >
+        {{ "delete--button" | translate }}
+      </button>
+    </div>
+  </generic-modal>
+</div>

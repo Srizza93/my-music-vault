@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthenticationService } from '@/services/authentication.service';
+import { authenticationPage } from '@/constants/pagesConstants';
 
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthenticationService);
@@ -10,5 +11,5 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  return router.parseUrl('/authentication');
+  return router.parseUrl(authenticationPage);
 };

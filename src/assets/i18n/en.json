@@ -23,6 +23,7 @@
   "field-required--label": "This field is required",
   "genres-fetch-error--label": "Error fetching genres! Please try again.",
   "login-error--label": "Login failed! Please check your credentials.",
+  "login-access--label": "Already have an account? Log in",
   "login-instruction--label": "Please log in to access your account.",
   "login-success--label": "Login successful! Redirecting...",
   "logout--label": "Logout",

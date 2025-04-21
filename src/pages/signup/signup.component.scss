@@ -1,5 +1,14 @@
 .signup-container {
-  &__title {
-    text-align: center;
+  text-align: center;
+
+  &__link {
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }

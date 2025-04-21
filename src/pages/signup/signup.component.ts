@@ -7,6 +7,10 @@ import {
 import { AuthFormComponent } from '@/components/auth-form/auth-form.component';
 import { AuthFormLabel } from '@/types/auth-form.interface';
 import { FormGroup } from '@angular/forms';
+import { AuthApi } from '@/api/auth.api';
+import { ToasterService, ToastType } from '@/services/toaster.service';
+import { Router } from '@angular/router';
+import { authenticationPage } from '@/constants/pagesConstants';
 
 @Component({
   selector: 'app-signup',
@@ -16,14 +20,16 @@ import { FormGroup } from '@angular/forms';
   standalone: true,
 })
 export class SignupComponent {
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private authApi: AuthApi,
+    private toaster: ToasterService,
+    private router: Router
+  ) {}
 
   get authFormLabels(): AuthFormLabel {
     return {
       signupButtonLabel: this.translate.instant('signup--button'),
-      authenticationButtonLabel: this.translate.instant(
-        'authentication--button'
-      ),
       signupAccessButtonLabel: this.translate.instant('signup-access--button'),
       emailLabel: this.translate.instant('email--label'),
       emailPlaceholder: this.translate.instant('email--placeholder'),
@@ -42,7 +48,29 @@ export class SignupComponent {
     };
   }
 
-  signup(event: FormGroup) {
-    console.log('Signup event:', event);
+  signup(signupForm: FormGroup) {
+    if (signupForm.invalid) return;
+
+    const { email, password } = signupForm.value;
+    this.authApi.signup(email, password).subscribe({
+      next: () => {
+        this.router.navigate([authenticationPage]);
+        this.toaster.showToast(
+          this.translate.instant('signup-success--label'),
+          ToastType.SUCCESS
+        );
+      },
+      error: () => {
+        this.toaster.showToast(
+          this.translate.instant('signup-error--label'),
+          ToastType.ERROR
+        );
+        signupForm.reset();
+      },
+    });
+  }
+
+  accessLoginPage() {
+    this.router.navigate([authenticationPage]);
   }
 }

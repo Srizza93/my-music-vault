@@ -68,7 +68,7 @@
       }}</mat-label>
       <input
         matInput
-        [placeholder]="labels.confirmPasswordPlaceholder"
+        [placeholder]="labels.confirmPasswordPlaceholder || ''"
         formControlName="confirmPassword"
         aria-required="true"
         aria-describedby="confirm-password-error"
@@ -122,6 +122,8 @@
       *ngIf="isSignupPage"
       mat-raised-button
       (click)="signup()"
+      [disabled]="authForm.invalid"
+      [attr.aria-disabled]="authForm.invalid"
       type="button"
       class="common-button"
     >

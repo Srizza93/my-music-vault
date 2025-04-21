@@ -4,20 +4,21 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  ValidatorFn,
+  ValidationErrors,
+  AbstractControl,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { AuthFormLabel } from '@/types/auth-form.interface';
 
 @Component({
   selector: 'auth-form',
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     MatInputModule,
@@ -28,7 +29,7 @@ import { AuthFormLabel } from '@/types/auth-form.interface';
   ],
 })
 export class AuthFormComponent {
-  @Input() isAuthenticationPage: boolean = true;
+  @Input() isAuthenticationPage: boolean = false;
   @Input() isSignupPage: boolean = false;
   @Input() labels: AuthFormLabel = {
     signupButtonLabel: '',
@@ -53,12 +54,16 @@ export class AuthFormComponent {
   authForm: FormGroup;
   isPasswordVisible: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder) {
     this.authForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['', true ? Validators.required : null],
     });
+  }
+
+  ngOnInit() {
+    this.setupCustomValidation();
   }
 
   get email() {
@@ -87,5 +92,28 @@ export class AuthFormComponent {
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  setupCustomValidation() {
+    if (this.isSignupPage) {
+      this.authForm
+        .get('confirmPassword')
+        ?.addValidators(this.validateConfirmPassword());
+
+      this.authForm.get('password')?.valueChanges.subscribe(() => {
+        this.authForm.get('confirmPassword')?.updateValueAndValidity();
+      });
+    } else {
+      this.authForm.get('confirmPassword')?.clearValidators();
+      this.authForm.get('confirmPassword')?.updateValueAndValidity();
+    }
+  }
+
+  validateConfirmPassword(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return this.authForm.get('password')?.value === control.value
+        ? null
+        : { passwordMismatch: true };
+    };
   }
 }

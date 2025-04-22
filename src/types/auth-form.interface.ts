@@ -9,7 +9,9 @@ export interface AuthFormLabel {
   passwordLabel: string;
   passwordPlaceholder: string;
   passwordRequiredLabel: string;
+  passwordPatternErrorLabel?: string;
   confirmPasswordLabel?: string;
   confirmPasswordPlaceholder?: string;
   confirmPasswordRequiredLabel?: string;
+  confirmPasswordMismatchLabel?: string;
 }

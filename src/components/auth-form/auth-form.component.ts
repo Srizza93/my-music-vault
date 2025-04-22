@@ -57,8 +57,8 @@ export class AuthFormComponent {
   constructor(private fb: FormBuilder) {
     this.authForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', true ? Validators.required : null],
+      password: ['', [Validators.required]],
+      confirmPassword: [''],
     });
   }
 
@@ -97,8 +97,16 @@ export class AuthFormComponent {
   setupCustomValidation() {
     if (this.isSignupPage) {
       this.authForm
+        .get('password')
+        ?.addValidators(
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[a-zA-Z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{6,20}$/
+          )
+        );
+
+      this.authForm
         .get('confirmPassword')
-        ?.addValidators(this.validateConfirmPassword());
+        ?.addValidators([Validators.required, this.validateConfirmPassword()]);
 
       this.authForm.get('password')?.valueChanges.subscribe(() => {
         this.authForm.get('confirmPassword')?.updateValueAndValidity();

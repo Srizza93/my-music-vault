@@ -38,12 +38,18 @@ export class SignupComponent {
       passwordLabel: this.translate.instant('password--label'),
       passwordPlaceholder: this.translate.instant('password--placeholder'),
       passwordRequiredLabel: this.translate.instant('password-required--label'),
+      passwordPatternErrorLabel: this.translate.instant(
+        'password-pattern-error--label'
+      ),
       confirmPasswordLabel: this.translate.instant('confirm-password--label'),
       confirmPasswordPlaceholder: this.translate.instant(
         'confirm-password--placeholder'
       ),
       confirmPasswordRequiredLabel: this.translate.instant(
         'confirm-password-required--label'
+      ),
+      confirmPasswordMismatchLabel: this.translate.instant(
+        'confirm-password-mismatch--label'
       ),
     };
   }

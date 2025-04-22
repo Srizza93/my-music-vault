@@ -60,6 +60,12 @@
       <mat-error *ngIf="password?.hasError('required')" id="password-error">
         {{ labels.passwordRequiredLabel }}
       </mat-error>
+      <mat-error
+        *ngIf="password?.hasError('pattern')"
+        id="password-patterns-error"
+      >
+        {{ labels.passwordPatternErrorLabel }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="isSignupPage" class="input-container">
@@ -93,8 +99,17 @@
         tabindex="0"
         >visibility_off</mat-icon
       >
-      <mat-error *ngIf="password?.hasError('required')" id="password-error">
+      <mat-error
+        *ngIf="confirmPassword?.hasError('required')"
+        id="confirm-password-error"
+      >
         {{ labels.confirmPasswordRequiredLabel }}
+      </mat-error>
+      <mat-error
+        *ngIf="confirmPassword?.hasError('passwordMismatch')"
+        id="confirm-password-mismatch-error"
+      >
+        {{ labels.confirmPasswordMismatchLabel }}
       </mat-error>
     </mat-form-field>
 

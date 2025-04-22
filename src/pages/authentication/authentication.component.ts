@@ -15,7 +15,7 @@ import { AuthenticationService } from '@/services/authentication.service';
 import { ToasterService, ToastType } from '@/services/toaster.service';
 import { AuthFormComponent } from '@/components/auth-form/auth-form.component';
 import { FormGroup } from '@angular/forms';
-import { signupPage } from '@/constants/pagesConstants';
+import { signupPage } from '@/constants/pages.constants';
 import { Router } from '@angular/router';
 import { AuthFormLabel } from '@/types/auth-form.interface';
 

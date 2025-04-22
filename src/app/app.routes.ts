@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthenticationComponent } from '@/pages/authentication/authentication.component';
 import { authGuard } from '@/app/guards/authentication.guard';
-import { authenticationPage } from '@/constants/pagesConstants';
+import { authenticationPage } from '@/constants/pages.constants';
 import {
   authenticationPath,
   myMusicVaultPath,

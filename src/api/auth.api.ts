@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import {
   LOGIN_FULL_ENDPOINT,
   SIGNUP_FULL_ENDPOINT,
-} from '@/constants/endpointsConstants';
+} from '@/constants/endpoints.constants';
 import { Signup } from '@/types/signup.interface';
 
 @Injectable({

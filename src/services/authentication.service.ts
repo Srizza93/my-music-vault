@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import {
   authenticationPage,
   myMusicVaultPage,
-} from '@/constants/pagesConstants';
+} from '@/constants/pages.constants';
 
 @Injectable({
   providedIn: 'root',

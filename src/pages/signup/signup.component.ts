@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { AuthApi } from '@/api/auth.api';
 import { ToasterService, ToastType } from '@/services/toaster.service';
 import { Router } from '@angular/router';
-import { authenticationPage } from '@/constants/pagesConstants';
+import { authenticationPage } from '@/constants/pages.constants';
 
 @Component({
   selector: 'app-signup',

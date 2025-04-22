@@ -5,6 +5,10 @@ import {
   LocalStorageHelper,
 } from '@/helpers/local-storage.helper';
 import { Router } from '@angular/router';
+import {
+  authenticationPage,
+  myMusicVaultPage,
+} from '@/constants/pages.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -32,12 +36,12 @@ export class AuthenticationService {
   login(jwtValue: string, expiresInSeconds: number, userId: string): void {
     this.cookieHelper.setCookie(JWT_COOKIE_NAME, jwtValue, expiresInSeconds);
     this.localStorageHelper.setItem(LOCAL_STORAGE_USER_ID, userId);
-    this.router.navigate(['/my-music-vault']);
+    this.router.navigate([myMusicVaultPage]);
   }
 
   logout(): void {
     this.cookieHelper.deleteCookie(JWT_COOKIE_NAME);
     this.localStorageHelper.removeItem(LOCAL_STORAGE_USER_ID);
-    this.router.navigate(['/authentication']);
+    this.router.navigate([authenticationPage]);
   }
 }

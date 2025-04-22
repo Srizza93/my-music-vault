@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import {
   TranslatePipe,
   TranslateModule,
   TranslateService,
@@ -15,10 +9,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { LoginApi } from '@/api/login.api';
+import { AuthApi } from '@/api/auth.api';
 import type { Login } from '@/types/login.interface';
 import { AuthenticationService } from '@/services/authentication.service';
 import { ToasterService, ToastType } from '@/services/toaster.service';
+import { AuthFormComponent } from '@/components/auth-form/auth-form.component';
+import { FormGroup } from '@angular/forms';
+import { signupPage } from '@/constants/pages.constants';
+import { Router } from '@angular/router';
+import { AuthFormLabel } from '@/types/auth-form.interface';
 
 @Component({
   selector: 'app-authentication',
@@ -32,40 +31,40 @@ import { ToasterService, ToastType } from '@/services/toaster.service';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
     MatIconModule,
+    AuthFormComponent,
   ],
 })
 export class AuthenticationComponent {
-  loginForm: FormGroup;
-  isPasswordVisible: boolean = false;
-
   constructor(
-    private fb: FormBuilder,
-    private loginApi: LoginApi,
+    private authApi: AuthApi,
     private authenticationService: AuthenticationService,
     private translate: TranslateService,
-    private toaster: ToasterService
-  ) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
+    private toaster: ToasterService,
+    private router: Router
+  ) {}
+
+  get authFormLabels(): AuthFormLabel {
+    return {
+      authenticationButtonLabel: this.translate.instant(
+        'authentication--button'
+      ),
+      signupAccessButtonLabel: this.translate.instant('signup-access--button'),
+      emailLabel: this.translate.instant('email--label'),
+      emailPlaceholder: this.translate.instant('email--placeholder'),
+      emailRequiredLabel: this.translate.instant('email-required--label'),
+      emailErrorLabel: this.translate.instant('email-error--label'),
+      passwordLabel: this.translate.instant('password--label'),
+      passwordPlaceholder: this.translate.instant('password--placeholder'),
+      passwordRequiredLabel: this.translate.instant('password-required--label'),
+    };
   }
 
-  get email() {
-    return this.loginForm.get('email');
-  }
+  login(loginForm: FormGroup) {
+    if (loginForm.invalid) return;
 
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  login() {
-    if (this.loginForm.invalid) return;
-
-    const { email, password } = this.loginForm.value;
-    this.loginApi.login(email, password).subscribe({
+    const { email, password } = loginForm.value;
+    this.authApi.login(email, password).subscribe({
       next: (response: Login) => {
         this.authenticationService.login(
           response.access_token,
@@ -82,12 +81,12 @@ export class AuthenticationComponent {
           this.translate.instant('login-error--label'),
           ToastType.ERROR
         );
-        this.loginForm.reset();
+        loginForm.reset();
       },
     });
   }
 
-  togglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
+  accessSignupPage() {
+    this.router.navigate([signupPage]);
   }
 }

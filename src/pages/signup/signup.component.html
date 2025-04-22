@@ -1,0 +1,18 @@
+<div class="signup-container" role="main">
+  <h1 id="signup-heading">
+    {{ "signup--title" | translate }}
+  </h1>
+  <auth-form
+    [isAuthenticationPage]="false"
+    [isSignupPage]="true"
+    [labels]="authFormLabels"
+    (signupEvent)="signup($event)"
+  />
+  <a
+    (click)="accessLoginPage()"
+    (keydown.enter)="accessLoginPage()"
+    class="signup-container__link"
+    tabindex="0"
+    >{{ "login-access--label" | translate }}</a
+  >
+</div>

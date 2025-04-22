@@ -4,7 +4,7 @@ import { environment } from '@/environments/environment';
 import { CookieHelper, JWT_COOKIE_NAME } from '@/helpers/cookie.helper';
 import { Observable } from 'rxjs';
 import { Song } from '@/types/song.model';
-import { API_URL, SONGS_ENDPOINT } from '@/constants/endpointsConstants';
+import { API_URL, SONGS_ENDPOINT } from '@/constants/endpoints.constants';
 
 @Injectable({
   providedIn: 'root',

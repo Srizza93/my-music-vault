@@ -4,6 +4,7 @@ import {
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { AuthFormComponent } from '@/components/auth-form/auth-form.component';
 import { AuthFormLabel } from '@/types/auth-form.interface';
 import { FormGroup } from '@angular/forms';
@@ -16,7 +17,7 @@ import { authenticationPage } from '@/constants/pages.constants';
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
-  imports: [AuthFormComponent, TranslatePipe, TranslateModule],
+  imports: [AuthFormComponent, TranslatePipe, TranslateModule, CommonModule],
   standalone: true,
 })
 export class SignupComponent {
@@ -26,6 +27,8 @@ export class SignupComponent {
     private toaster: ToasterService,
     private router: Router
   ) {}
+
+  emailSignedup: string | null = null;
 
   get authFormLabels(): AuthFormLabel {
     return {
@@ -60,7 +63,7 @@ export class SignupComponent {
     const { email, password } = signupForm.value;
     this.authApi.signup(email, password).subscribe({
       next: () => {
-        this.router.navigate([authenticationPage]);
+        this.emailSignedup = email;
         this.toaster.showToast(
           this.translate.instant('signup-success--label'),
           ToastType.SUCCESS

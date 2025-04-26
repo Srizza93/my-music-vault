@@ -41,6 +41,8 @@
   "search--placeholder": "Search for songs...",
   "signup--button": "Sign Up",
   "signup-access--button": "Create new account",
+  "signup-error--label": "Error signing up! Please try again.",
+  "signup-success--label": "Registration successful!",
   "signup--title": "Create an account",
   "song-actions--label": "Actions",
   "song-added--label": "Song added successfully!",

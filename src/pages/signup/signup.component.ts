@@ -48,6 +48,9 @@ export class SignupComponent {
         );
         signupForm.reset();
       },
+      complete: () => {
+        signupForm.reset();
+      },
     });
   }
 

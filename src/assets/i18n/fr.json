@@ -41,6 +41,8 @@
   "search--placeholder": "Rechercher des chansons...",
   "signup--button": "S'inscrire",
   "signup-access--button": "Créer un nouveau compte",
+  "signup-error--label": "Erreur lors de l'inscription ! Veuillez réessayer.",
+  "signup-success--label": "Inscription réussie!",
   "signup--title": "Créer un compte",
   "song-actions--label": "Actions",
   "song-added--label": "Chanson ajoutée avec succès !",

@@ -11,12 +11,6 @@
   justify-content: center;
   align-items: baseline;
   z-index: $z-index-5;
-
-  @media screen {
-    @media (max-width: 400px) {
-      width: auto;
-    }
-  }
 }
 
 .modal-content {
@@ -45,6 +39,7 @@
 
   @media screen and (max-width: 400px) {
     padding: 1rem;
+    min-width: 0;
   }
 }
 

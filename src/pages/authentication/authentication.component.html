@@ -7,7 +7,17 @@
   <auth-form
     [isAuthenticationPage]="true"
     [isSignupPage]="false"
-    [labels]="authFormLabels"
+    [labels]="{
+      authenticationButtonLabel: 'authentication--button' | translate,
+      signupAccessButtonLabel: 'signup-access--button' | translate,
+      emailLabel: 'email--label' | translate,
+      emailPlaceholder: 'email--placeholder' | translate,
+      emailRequiredLabel: 'email-required--label' | translate,
+      emailErrorLabel: 'email-error--label' | translate,
+      passwordLabel: 'password--label' | translate,
+      passwordPlaceholder: 'password--placeholder' | translate,
+      passwordRequiredLabel: 'password-required--label' | translate,
+    }"
     (loginEvent)="login($event)"
     (accessSignupPageEvent)="accessSignupPage()"
   ></auth-form>

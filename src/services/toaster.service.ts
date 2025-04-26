@@ -20,6 +20,7 @@ export class ToasterService {
     this.snackBar.open(message, this.translate.instant('close--button'), {
       duration: 2000,
       panelClass: [this.getPanelClass(type)],
+      verticalPosition: 'top',
     });
   }
 

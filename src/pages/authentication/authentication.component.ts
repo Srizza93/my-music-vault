@@ -17,7 +17,6 @@ import { AuthFormComponent } from '@/components/auth-form/auth-form.component';
 import { FormGroup } from '@angular/forms';
 import { signupPage } from '@/constants/pages.constants';
 import { Router } from '@angular/router';
-import { AuthFormLabel } from '@/types/auth-form.interface';
 
 @Component({
   selector: 'app-authentication',
@@ -43,22 +42,6 @@ export class AuthenticationComponent {
     private toaster: ToasterService,
     private router: Router
   ) {}
-
-  get authFormLabels(): AuthFormLabel {
-    return {
-      authenticationButtonLabel: this.translate.instant(
-        'authentication--button'
-      ),
-      signupAccessButtonLabel: this.translate.instant('signup-access--button'),
-      emailLabel: this.translate.instant('email--label'),
-      emailPlaceholder: this.translate.instant('email--placeholder'),
-      emailRequiredLabel: this.translate.instant('email-required--label'),
-      emailErrorLabel: this.translate.instant('email-error--label'),
-      passwordLabel: this.translate.instant('password--label'),
-      passwordPlaceholder: this.translate.instant('password--placeholder'),
-      passwordRequiredLabel: this.translate.instant('password-required--label'),
-    };
-  }
 
   login(loginForm: FormGroup) {
     if (loginForm.invalid) return;

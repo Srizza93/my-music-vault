@@ -9,9 +9,27 @@
   <auth-form
     [isAuthenticationPage]="false"
     [isSignupPage]="true"
-    [labels]="authFormLabels"
     (signupEvent)="signup($event)"
-  />
+    [labels]="{
+      signupButtonLabel: 'signup--button' | translate,
+      signupAccessButtonLabel: 'signup-access--button' | translate,
+      emailLabel: 'email--label' | translate,
+      emailPlaceholder: 'email--placeholder' | translate,
+      emailRequiredLabel: 'email-required--label' | translate,
+      emailErrorLabel: 'email-error--label' | translate,
+      passwordLabel: 'password--label' | translate,
+      passwordPlaceholder: 'password--placeholder' | translate,
+      passwordRequiredLabel: 'password-required--label' | translate,
+      passwordPatternErrorLabel: 'password-pattern-error--label' | translate,
+      confirmPasswordLabel: 'confirm-password--label' | translate,
+      confirmPasswordPlaceholder: 'confirm-password--placeholder' | translate,
+      confirmPasswordRequiredLabel:
+        'confirm-password-required--label' | translate,
+      confirmPasswordMismatchLabel:
+        'confirm-password-mismatch--label' | translate
+    }"
+  >
+  </auth-form>
   <a
     (click)="accessLoginPage()"
     (keydown.enter)="accessLoginPage()"
